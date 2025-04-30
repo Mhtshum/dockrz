@@ -9,15 +9,14 @@ using different branches for each scenario
 
 ## Local react development without node and react on local 
 - In this we can create react app using vite@6.4.3 and locally having following folder structure
-   my-react-app/
-	```bash	
-    ├── ...
-	├── docker-compose.yml
-	├── Dockerfile
-	│   ├── ca/
-	│   ├── package.json
-	│   ├── public/
-	│   └── src/
+
+    ```bash	
+    ├── my-react-app/
+    │   ├── ca/	
+    │   ├── public/	
+    │   ├── src/	
+    │   ├── Dockerfile
+    │   ├── docker-compose.yml
     ```
 	
 	

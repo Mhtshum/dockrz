@@ -1,17 +1,32 @@
-FROM node:22.15
+# Dockerfile
+FROM node:23-alpine3.20
 
 WORKDIR /app
 
-# Create the app non-interactively with Vite 6.3 and React template
-RUN npx create-vite@6.3 vt-app --template react
+# Install additional tools if needed
+RUN apk add --no-cache inotify-tools rsync bash
+
+# Create app directory structure
+RUN mkdir -p /app/temp-src
+
+# Create the Vite app in the final location
+#RUN npm create vite@6.3.1 vt-app --template react
+RUN npx create-vite@6.3.1 vt-app --template react
 
 WORKDIR /app/vt-app
 
 # Install dependencies
-RUN npm install
+#RUN npm install
 
-# Expose the dev server port
-EXPOSE 5173
 
-# Start Vite with host binding so it's accessible from outside
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+
+# Make script executable
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
+
+# Default command (can be overridden)
 CMD ["npm", "run", "dev", "--", "--host"]
